@@ -16,9 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+# from blog import urls as burls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('blog/', burls),
 ]
 
 if settings.DEBUG:
