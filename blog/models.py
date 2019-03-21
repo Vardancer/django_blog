@@ -21,5 +21,5 @@ class Comment(models.Model):
     date_add = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "{} -- {}".format(self.comment[:50], self.user)
+        return "{} -- {}".format(self.article.title, self.date_add)
 

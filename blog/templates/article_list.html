@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block article_list %}
+
+    {% for article in articles_list %}
+        <h2>{{ article.title }}</h2>
+        <h5>{{ article.text }}</h5>
+    {% empty %}
+        <h2>No articles yet</h2>
+    {% endfor %}
+    
+
+{% endblock %}
