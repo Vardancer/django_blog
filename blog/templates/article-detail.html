@@ -10,8 +10,9 @@
         <li>{{ comment.comment }} -- {{ comment.date_add|date }} -- {{ comment.user|capfirst }}</li>
     {% endfor %}
 
-    <form>
+    <form method="post">
         <p>Add comment</p>
+        {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
