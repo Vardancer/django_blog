@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
-{% block qq %}
+{% block article_detail %}
+
+    <p>{{ article.title }}</p>
+    <p>{{ article.text }}</p>
+
+    <p>Comments</p>
+    {% for comment in comments %}
+        <li>{{ comment.comment }} -- {{ comment.date_add|date }} -- {{ comment.user|capfirst }}</li>
+    {% endfor %}
+
 
 {% endblock %}
