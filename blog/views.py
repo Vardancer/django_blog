@@ -40,6 +40,7 @@ class ArticleDetailView(DetailView, FormMixin):
             return self.form_invalid(form)
 
     def form_valid(self, form):
+
         return super().form_valid(form)
 
 # class AddComment(CreateView):
