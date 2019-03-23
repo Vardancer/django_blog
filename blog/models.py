@@ -5,13 +5,15 @@ from django.db import models
 
 
 class Article(models.Model):
+    author = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=1)
     title = models.CharField(max_length=100, help_text="Title")
     text = models.TextField(help_text="A blog body")
+    active = models.BooleanField(verbose_name="is_published", default=True)
     date_add = models.DateField(auto_now_add=True)
     date_change = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return "{} -- {}".format(self.title, self.author.last_name)
 
 
 class Comment(models.Model):

@@ -1,6 +1,6 @@
 # from django.contrib.auth import login
 from django.http import HttpResponseForbidden
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import FormMixin
 from blog.models import Article, Comment
@@ -50,6 +50,6 @@ class ArticleDetailView(FormMixin, DetailView):
 
 class AddArticle(CreateView):
     form_class = CreateArticleForm
-    success_url = reverse('article-list')
-
+    success_url = reverse_lazy('article-list')
+    template_name = 'article_create.html'
 

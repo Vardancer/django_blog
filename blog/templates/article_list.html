@@ -3,10 +3,12 @@
 {% block article_list %}
 
     {% for article in articles_list %}
-        <a href="{% url 'article' article.id %}">{{ article.title }}</a>
+        <li><a href="{% url 'article' article.id %}">{{ article.title }}</a></li>
     {% empty %}
         <h2>No articles yet</h2>
     {% endfor %}
-    
+
+    <p>Create article</p>
+    <a href="{% url 'article_create' %}">Add</a>
 
 {% endblock %}
