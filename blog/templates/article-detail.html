@@ -2,6 +2,8 @@
 
 {% block article_detail %}
 
+    <a href="{% url 'article-list' %}">Home</a>
+
     <p>{{ article.title }}</p>
     <p>{{ article.text }}</p>
 
@@ -10,7 +12,7 @@
         <li>{{ comment.comment }} -- {{ comment.date_add|date }} -- {{ comment.user|capfirst }}</li>
     {% endfor %}
 
-    <form method="post">
+    <form action="." method="post">
         <p>Add comment</p>
         {% csrf_token %}
         {{ form.as_p }}

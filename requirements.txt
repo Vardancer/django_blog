@@ -1,0 +1,5 @@
+Django==2.1.7
+django-bootstrap4==0.0.8
+django-debug-toolbar==1.11
+pytz==2018.9
+sqlparse==0.3.0
