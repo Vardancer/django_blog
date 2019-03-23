@@ -11,4 +11,4 @@ class AddCommentForm(models.ModelForm):
 class CreateArticleForm(models.ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'text']
+        fields = ['title', 'text', 'active']
