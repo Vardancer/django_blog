@@ -1,10 +1,10 @@
 # from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.urls import reverse
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import FormMixin
 from blog.models import Article, Comment
-from blog.forms import AddCommentForm
+from blog.forms import AddCommentForm, CreateArticleForm
 
 # Create your views here.
 
@@ -15,7 +15,7 @@ class ArticleListView(ListView):
     template_name = 'article_list.html'
 
 
-class ArticleDetailView(DetailView, FormMixin):
+class ArticleDetailView(FormMixin, DetailView):
     model = Article
     template_name = 'article-detail.html'
     context_object_name = 'article'
@@ -30,8 +30,9 @@ class ArticleDetailView(DetailView, FormMixin):
         context['form'] = self.get_form()
         return context
 
-    @login_required
     def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
@@ -40,12 +41,15 @@ class ArticleDetailView(DetailView, FormMixin):
             return self.form_invalid(form)
 
     def form_valid(self, form):
-        form.save(commit=False)
-        form['user'] = self.request['user'].id
-        form.save()
+        comm = form.save(commit=False)
+        comm.user = self.request.user
+        comm.article = self.object
+        comm.save()
         return super(ArticleDetailView, self).form_valid(form)
 
-# class AddComment(CreateView):
-#     form_class = AddCommentForm
+
+class AddArticle(CreateView):
+    form_class = CreateArticleForm
+    success_url = reverse('article-list')
 
 

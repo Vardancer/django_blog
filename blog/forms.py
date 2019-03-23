@@ -7,3 +7,8 @@ class AddCommentForm(models.ModelForm):
         model = Comment
         fields = ['comment']
 
+
+class CreateArticleForm(models.ModelForm):
+    class Meta:
+        model = Article
+        fields = ['title', 'text']
