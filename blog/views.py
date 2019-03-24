@@ -1,4 +1,4 @@
-# from django.contrib.auth import login
+from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
@@ -8,7 +8,7 @@ from blog.forms import AddCommentForm, CreateArticleForm
 
 # Create your views here.
 # TODO https://github.com/django-ckeditor/django-ckeditor
-# todo make beauty with bootstrap4
+# todo make beauty with bootstrap4, https://getbootstrap.com/docs/4.3/content/typography/
 
 
 class ArticleListView(ListView):
@@ -54,4 +54,10 @@ class AddArticle(CreateView):
     form_class = CreateArticleForm
     success_url = reverse_lazy('article-list')
     template_name = 'article_create.html'
+
+
+class AuthView(LoginView):
+    pass
+
+
 
