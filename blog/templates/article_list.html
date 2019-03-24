@@ -16,7 +16,10 @@
         <h2>No articles yet</h2>
     {% endfor %}
 
-    <p>Create article</p>
-    <a href="{% url 'article_create' %}">Add</a>
+    {% if user.is_authenticated %}
+        <p>Create article</p>
+        <a href="{% url 'article_create' %}">Add</a>
+
+    {% endif %}
 
 {% endblock %}

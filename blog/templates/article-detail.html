@@ -12,11 +12,13 @@
         <li>{{ comment.comment }} -- {{ comment.date_add|date }} -- {{ comment.user|capfirst }}</li>
     {% endfor %}
 
+    {% if user.is_authenticated %}
     <form action="." method="post">
         <p>Add comment</p>
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Submit</button>
     </form>
+    {% endif %}
 
 {% endblock %}

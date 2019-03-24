@@ -7,6 +7,8 @@ from blog.models import Article, Comment
 from blog.forms import AddCommentForm, CreateArticleForm
 
 # Create your views here.
+# TODO https://github.com/django-ckeditor/django-ckeditor
+# todo make beauty with bootstrap4
 
 
 class ArticleListView(ListView):
