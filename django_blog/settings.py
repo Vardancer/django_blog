@@ -33,6 +33,7 @@ INTERNAL_IPS = ['127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.sites',
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,8 +62,11 @@ ROOT_URLCONF = 'django_blog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            'templates',
+            'blog/templates',
+        ],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -127,3 +131,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = [
+    ("images", os.path.join(BASE_DIR, 'static', 'images')),
+    ("fonts", os.path.join(BASE_DIR, 'static', 'fonts')),
+    ("webfonts", os.path.join(BASE_DIR, 'static', 'webfonts')),
+    ("css", os.path.join(BASE_DIR, 'static', 'css')),
+    ("locale", os.path.join(BASE_DIR, 'static', 'locale')),
+]
+
+LOGIN_REDIRECT_URL = '/blog/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
+ACCOUNT_ACTIVATION_DAYS = 2
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
