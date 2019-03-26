@@ -2,24 +2,19 @@
 
 {% block article_list %}
 
-{% load bootstrap4 %}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery='full' %}
 
-    {% for article in articles_list %}
-        <li class="page-item">
-            <a class="page-link" href="{% url 'article' article.id %}">{{ article.title }}</a>
-
-        </li>
-
-    {% empty %}
-        <h2>No articles yet</h2>
+    {% for article in articles %}
+        <div class="col-md-12">
+            <h2>
+                {{ article.title }}
+            </h2>
+            <p>
+                {{ article.text | truncatewords:2 }}
+            </p>
+            <p>
+                <a class="btn" href="{% url 'article' article.id %}">Read more</a>
+            </p>
+        </div>
     {% endfor %}
-
-    {% if user.is_authenticated %}
-        <p>Create article</p>
-        <a href="{% url 'article_create' %}">Add</a>
-
-    {% endif %}
 
 {% endblock %}

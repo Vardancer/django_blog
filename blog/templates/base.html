@@ -3,13 +3,45 @@
 <head>
     <meta charset="UTF-8">
     {% block meta %}{% endblock %}
-    {% block title %}{% endblock %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{#    <title>Bootstrap 4, from LayoutIt!</title>#}
+
+{#    <meta name="description" content="Source code generated using layoutit.com">#}
+{#    <meta name="author" content="LayoutIt!">#}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+
+    {% block title %}<title>BASE</title>{% endblock %}
 </head>
 <body>
 
-{% block article_list %}
 
-{% endblock %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+		</div>
+        <div class="row">
+            <div class="col-md-12">
+            </div>
+        </div>
+        <div class="row">
+        {% block article_list %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{#{% block article_list %}#}
+{##}
+{#{% endblock %}#}
 
 {% block article_detail %}
 
