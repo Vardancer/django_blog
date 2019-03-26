@@ -3,8 +3,8 @@
 {% block article_list %}
 
 
-    {% for article in articles %}
-        <div class="col-md-12">
+    {% for article in articles_list %}
+{#        <div class="col-md-12">#}
             <h2>
                 {{ article.title }}
             </h2>
@@ -14,7 +14,7 @@
             <p>
                 <a class="btn" href="{% url 'article' article.id %}">Read more</a>
             </p>
-        </div>
+{#        </div>#}
     {% endfor %}
 
 {% endblock %}
