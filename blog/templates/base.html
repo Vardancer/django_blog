@@ -59,7 +59,7 @@
 						</li>
 						<li class="nav-item dropdown">
                             {% if user.is_authenticated%}
-							 <a class="nav-link dropdown-toggle" href="{% url 'login' %}" id="navbarDropdownMenuLink" data-toggle="dropdown">Authorization</a>
+							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">Authorization</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 								 <a class="dropdown-item" href="#">Action</a>
                                  <a class="dropdown-item" href="#">Another action</a>
@@ -68,7 +68,24 @@
 								</div> <a class="dropdown-item" href="#">Separated link</a>
 							</div>
                             {% else %}
-                                {% bootstrap_form  %}
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown">11111</a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                  <form class="px-4 py-3" action="{% url 'login' %}" method="post">
+                                      {% csrf_token %}
+                                      <div class="form-group">
+                                          {% bootstrap_label "Login" label_for="id_username" %}
+                                          <input type="text" class="form-control" id="id_username" name="username" placeholder="username">
+                                      </div>
+                                      <div class="form-group">
+                                          {% bootstrap_label "Password" label_for="id_password" %}
+                                          <input type="password" class="form-control" id="id_password" name="password" placeholder="Password">
+                                      </div>
+                                      <button type="submit" class="btn btn-primary">SignIn</button>
+                                  </form>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="dropdown-item" href="#">New around here? Sign up</a>
+                                  <a class="dropdown-item" href="#">Forgot password?</a>
+                                </div>
                             {% endif %}
 						</li>
 					</ul>

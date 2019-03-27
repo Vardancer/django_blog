@@ -140,8 +140,8 @@ STATICFILES_DIRS = [
     ("locale", os.path.join(BASE_DIR, 'static', 'locale')),
 ]
 
-LOGIN_REDIRECT_URL = '/blog/'
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 ACCOUNT_ACTIVATION_DAYS = 2
 
 if DEBUG:

@@ -6,6 +6,7 @@ from django.views.generic.edit import FormMixin
 from blog.models import Article, Comment
 from blog.forms import AddCommentForm, CreateArticleForm
 
+
 # Create your views here.
 # TODO https://github.com/django-ckeditor/django-ckeditor
 # todo make beauty with bootstrap4, https://getbootstrap.com/docs/4.3/content/typography/
@@ -56,8 +57,9 @@ class AddArticle(CreateView):
     template_name = 'article_create.html'
 
 
-class AuthView(LoginView):
-    pass
+# class RegView(RegistrationView):
+#     template_name = 'base.html'
+
 
 
 
