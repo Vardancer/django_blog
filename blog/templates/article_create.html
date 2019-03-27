@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block article_create %}
+{% block article %}
     {% if user.is_authenticated %}
          <form method="post">
             {% csrf_token %}

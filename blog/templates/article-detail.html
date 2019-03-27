@@ -1,24 +1,46 @@
 {% extends 'base.html' %}
 
-{% block article_detail %}
+{% block article %}
 
-    <a href="{% url 'blog:article-list' %}">Home</a>
 
     <p>{{ article.title }}</p>
     <p>{{ article.text }}</p>
+    <div class="comments">
+        <h4 class="title-comments">Comments</h4>
+        <ul class="media-list">
+            {% for comment in comments %}
+                <li class="media">
+                    <div class="media-left">
 
-    <p>Comments</p>
-    {% for comment in comments %}
-        <li>{{ comment.comment }} -- {{ comment.date_add|date }} -- {{ comment.user|capfirst }}</li>
-    {% endfor %}
+                    </div>
+                    <div class="media-body">
+                        <div class="media-heading">
+                            <div class="author">{{ comment.user|capfirst }}</div>
+                            <div class="metadata">
+                                <span class="date">{{ comment.date_add|date }}</span>
+                            </div>
+                        </div>
+                        <div class="media-text text-justify">
+                            {{ comment.comment }}
+                        </div>
+                    </div>
+                    <div class="media-footer">
 
-    {% if user.is_authenticated %}
-    <form action="." method="post">
-        <p>Add comment</p>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
-    {% endif %}
+                    </div>
+{#                    {{ comment.comment }} -- {{ comment.date_add|date }} -- {{ comment.user|capfirst }}#}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+            {% if user.is_authenticated %}
+            <form action="." method="post">
+                <p>Add comment</p>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Submit</button>
+            </form>
+            {% endif %}
+
+
 
 {% endblock %}
