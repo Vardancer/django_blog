@@ -64,7 +64,7 @@
                             {% if user.is_authenticated%}
 							 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown">Welcome</a>
 							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-								 <a class="dropdown-item" href="{% url 'logout' %}">Log out</a>
+								 <a class="dropdown-item" href="{% url 'logout' %}?next={{request.path}}">Log out</a>
 {#                                 <a class="dropdown-item" href="#">Another action</a>#}
 {#                                 <a class="dropdown-item" href="#">Something else here</a>#}
 {#								<div class="dropdown-divider">#}
@@ -73,7 +73,7 @@
                             {% else %}
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">11111</a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                                  <form class="px-4 py-3" action="{% url 'login' %}" method="post">
+                                  <form class="px-4 py-3" action="{% url 'login' %}?next={{request.path}}" method="post">
                                       {% csrf_token %}
                                       <div class="form-group">
                                           {% bootstrap_label "Login" label_for="id_username" %}
@@ -94,33 +94,24 @@
 					</ul>
 				</div>
 			</nav>
-		</div>
-	</div>
 
-    <div class="row">
-        <div class="col-md-4">
-		</div>
-        <div class="row">
-            <div class="col-md-3">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                {% block article %}{% endblock %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-6">
+                    {% block article %}{% endblock %}
+                    {% block content %}{% endblock %}
+                </div>
+                <div class="col-md-3">
 
+                </div>
             </div>
-        </div>
+
     </div>
+</div>
 </div>
 
 
-{% block content %}
-
-{% endblock %}
 
 
 </body>
