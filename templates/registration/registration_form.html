@@ -1,45 +1,26 @@
 {% extends 'registration/registration_base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans "Register for an account" %}{% endblock %}
+{% load widget_tweaks %}
 
+<form method="post" novalidate>
+    {% csrf_token %}
+    {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field }}
+    {% endfor %}
 
-{% block content %}
-    {{ form.non_fields_errors }}
-    <form class="px-4 py-3" method="post" action="">
-        {% csrf_token %}
-        <div class="form-group row">
-            {{ form.label.errors }}
-            <label for="username" class="col-sm-2 col-form-label">Username</label>
-            <div class="col-sm-10">
-              <input type="text" name="username" class="form-control" id="username" placeholder="Username">
-            </div>
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for error in form.non_field_errors %}
+                {{ error }}
+            {% endfor %}
+            
         </div>
-        <div class="form-group row">
-            {{ form.email.errors }}
-            <label for="email" class="col-sm-2 col-form-label">Email</label>
-            <div class="col-sm-10">
-                <input type="email" name="email" class="form-control" id="email" placeholder="email">
-            </div>
-        </div>
-        <div class="form-group row">
-            {{ form.password1.errors }}
-            <label for="password1" class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-10">
-              <input type="password" name="password1" class="form-control" id="password1" placeholder="Password">
-            </div>
-        </div>
-        <div class="form-group row">
-            {{ form.password2.errors }}
-            <label for="password2" class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-10">
-              <input type="password" name="password2" class="form-control" id="password2" placeholder="Password">
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-sm-10">
-              <input type="submit" value="{% trans 'Submit' %}" class="btn btn-primary" />
-            </div>
-        </div>
-    </form>
-{% endblock %}
+    {% endif %}
+
+    {% for field in form.visible_fields %}
+
+    {% endfor %}
+    
+    
+</form>
