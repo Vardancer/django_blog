@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'bootstrap4',
+    'widget_tweaks',
     'ckeditor',
     'blog',
 ]
@@ -137,6 +137,7 @@ STATICFILES_DIRS = [
     ("fonts", os.path.join(BASE_DIR, 'static', 'fonts')),
     ("webfonts", os.path.join(BASE_DIR, 'static', 'webfonts')),
     ("css", os.path.join(BASE_DIR, 'static', 'css')),
+    ("js", os.path.join(BASE_DIR, 'static', 'js')),
     ("locale", os.path.join(BASE_DIR, 'static', 'locale')),
 ]
 
