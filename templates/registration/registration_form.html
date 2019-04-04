@@ -2,12 +2,20 @@
 {% load i18n %}
 {% load widget_tweaks %}
 
-
-<form method="post" action="">
+{% block content %}
+<form method="post" novalidate>
     {% csrf_token %}
     {% for hidden_field in form.hidden_fields %}
         {{ hidden_field }}
     {% endfor %}
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger" role="alert">
+              {% for error in form.non_field_errors %}
+                  {{ error }}
+              {% endfor %}
+        </div>
+    {% endif %}
 
     {% for field in form.visible_fields %}
         <div class="form-group">
@@ -32,7 +40,6 @@
         {% endif %}
         </div>
     {% endfor %}
-    
-    
-    
+
 </form>
+{% endblock %}
