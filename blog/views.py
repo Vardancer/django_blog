@@ -61,6 +61,9 @@ class AnswerView(FormView):
     template_name = 'survey.html'
 
 
+class Test():
+    pass
+
 
 
 
