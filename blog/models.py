@@ -35,6 +35,7 @@ class Survey(models.Model):
     description = models.CharField(max_length=150)
     is_published = models.BooleanField(default=False)
     need_logged_user = models.BooleanField(default=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, related_name='categories')
 
     def __str__(self):
         return self.description
@@ -44,7 +45,7 @@ class Survey(models.Model):
 
 
 class Questions(models.Model):
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='survey')
     text = models.CharField(max_length=255)
 
     def __str__(self):
@@ -54,11 +55,8 @@ class Questions(models.Model):
 class Answers(models.Model):
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='users')
     is_checked = models.BooleanField(default=False)
-
-    class Meta:
-        unique_together = ("question", "survey")
 
     def __str__(self):
         return self.question
