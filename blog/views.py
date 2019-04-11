@@ -3,8 +3,9 @@ from django.http import HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import FormMixin, FormView
-from blog.models import Article, Comment
+from blog.models import Article, Comment, Survey, Questions, Answers
 from blog.forms import AddCommentForm, CreateArticleForm, SurveyAnswer
+
 
 
 # Create your views here.
@@ -58,7 +59,9 @@ class AddArticle(CreateView):
 
 
 class AnswerView(FormView):
-    template_name = 'survey.html'
+    #
+    form_class = SurveyAnswer
+
 
 
 class Test():
