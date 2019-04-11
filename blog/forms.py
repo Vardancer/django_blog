@@ -24,3 +24,8 @@ class SurveyAnswer(models.ModelForm):
         }
 
 
+# https://github.com/jessykate/django-survey/tree/master/survey
+# https://github.com/bitlabstudio/django-multilingual-survey/tree/master/multilingual_survey
+# https://github.com/seantis/seantis-questionnaire/blob/master/questionnaire/models.py
+
+
