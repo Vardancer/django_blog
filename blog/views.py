@@ -1,10 +1,10 @@
 from django.contrib.auth.views import LoginView, LogoutView
 from django.http import HttpResponseForbidden
 from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView
-from django.views.generic.edit import FormMixin, FormView
+from django.views.generic import ListView, DetailView, CreateView, View
+from django.views.generic.edit import FormMixin, ModelFormMixin
 from blog.models import Article, Comment, Survey, Questions, Answers
-from blog.forms import AddCommentForm, CreateArticleForm, SurveyAnswer
+from blog.forms import AddCommentForm, CreateArticleForm, SurveyAnswerForm
 
 
 
@@ -58,14 +58,13 @@ class AddArticle(CreateView):
     template_name = 'article_create.html'
 
 
-class AnswerView(FormView):
-    #
-    form_class = SurveyAnswer
+class SurveyView(FormMixin, View):
+    form_class = SurveyAnswerForm
 
-
-
-class Test():
-    pass
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['survey'] = kwargs.get('pk')
+        return context
 
 
 

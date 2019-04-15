@@ -1,5 +1,5 @@
 from django.forms import models
-from django.forms.widgets import CheckboxInput
+from django import forms
 from blog.models import Article, Comment, Answers, Questions, Survey
 
 
@@ -15,16 +15,22 @@ class CreateArticleForm(models.ModelForm):
         fields = ['title', 'text', 'active']
 
 
-class SurveyAnswer(models.ModelForm):
+class SurveyAnswerForm(models.ModelForm):
 
     class Meta:
         model = Questions
-        fields = ('text',)
+        fields = ('question',)
 
     def __init__(self, *args, **kwargs):
-        survey = kwargs.pop('survey')
-        self.survey = survey
-        super(SurveyAnswer, self).__init__(*args, **kwargs)
+        super(SurveyAnswerForm, self).__init__(*args, **kwargs)
+
+        # data = kwargs.get('data')
+
+        for q in Survey.objects.filter(kwargs.get('pk')):
+            q_choices = q.get_choices()
+            self.fields["question_%d" % q.pk] = forms.MultipleChoiceField(label=q.question,
+                                                                          widget=forms.CheckboxSelectMultiple,
+                                                                          choices=q_choices)
 
 
 # https://github.com/jessykate/django-survey/tree/master/survey
