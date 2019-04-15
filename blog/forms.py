@@ -1,6 +1,6 @@
 from django.forms import models
 from django.forms.widgets import CheckboxInput
-from blog.models import Article, Comment, Answers
+from blog.models import Article, Comment, Answers, Questions, Survey
 
 
 class AddCommentForm(models.ModelForm):
@@ -16,12 +16,15 @@ class CreateArticleForm(models.ModelForm):
 
 
 class SurveyAnswer(models.ModelForm):
+
     class Meta:
-        model = Answers
-        fields = ('question', 'is_checked')
-        widgets = {
-            'is_checked': CheckboxInput(attrs={'required': 'False'})
-        }
+        model = Questions
+        fields = ('text',)
+
+    def __init__(self, *args, **kwargs):
+        survey = kwargs.pop('survey')
+        self.survey = survey
+        super(SurveyAnswer, self).__init__(*args, **kwargs)
 
 
 # https://github.com/jessykate/django-survey/tree/master/survey

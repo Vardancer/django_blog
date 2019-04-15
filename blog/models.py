@@ -47,6 +47,17 @@ class Survey(models.Model):
 class Questions(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='survey')
     text = models.CharField(max_length=255)
+    choices = models.CharField(default="yes,no,maybe", max_length=200)
+
+    def get_choices(self):
+        choices = self.choices.split(',')
+        c_list = []
+        for c in choices:
+            c = c.strip()
+            c_list.append((c, c))
+        choices_tuple = tuple(c_list)
+
+        return choices_tuple
 
     def __str__(self):
         return self.text
@@ -56,7 +67,7 @@ class Answers(models.Model):
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='users')
-    is_checked = models.BooleanField(default=False)
+    answer = models.CharField(max_length=20)
 
     def __str__(self):
         return self.question
