@@ -61,11 +61,17 @@ class AddArticle(CreateView):
 class SurveyView(FormView):
     form_class = SurveyForm
     template_name = 'survey.html'
+    success_url = reverse_lazy('article-list')
 
     def get_initial(self):
         initial = super().get_initial()
-        initial['survey'] = self.kwargs['survey']
+        initial.update({
+            "survey": self.kwargs['survey']
+        })
         return initial
+
+
+
 
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)

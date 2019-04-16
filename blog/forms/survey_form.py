@@ -14,8 +14,10 @@ class SurveyForm(Form):
                                                                     widget=CheckboxSelectMultiple,
                                                                     choices=q_choices)
 
-    # def save(self):
-    #     answer = super(SurveyForm, self).save(commit=False)
+    @staticmethod
+    def save(self, *args, **kwargs):
+        data = self.data
+        print(data)
 
 # class SurveyAnswerForm(models.ModelForm):
 #
