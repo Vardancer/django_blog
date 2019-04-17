@@ -70,7 +70,9 @@ class SurveyView(FormView):
         })
         return initial
 
-
+    def form_valid(self, form):
+        form.save(self)
+        return super().form_valid(form)
 
 
     # def get_context_data(self, **kwargs):

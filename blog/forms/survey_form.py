@@ -15,9 +15,9 @@ class SurveyForm(Form):
                                                                     choices=q_choices)
 
     @staticmethod
-    def save(self, *args, **kwargs):
-        data = self.data
-        print(data)
+    def save(self, POST):
+        for k, v in POST:
+            print(v)
 
 # class SurveyAnswerForm(models.ModelForm):
 #
