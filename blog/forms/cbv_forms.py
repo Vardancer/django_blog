@@ -1,5 +1,5 @@
 from django.forms import models
-from blog.models import Article, Comment, Answers
+from blog.models import Article, Comment
 
 
 class AddCommentForm(models.ModelForm):
@@ -12,11 +12,5 @@ class CreateArticleForm(models.ModelForm):
     class Meta:
         model = Article
         fields = ['title', 'text', 'active']
-
-
-class SurveyAnswer(models.ModelForm):
-    class Meta:
-        model = Answers
-        fields = ('question', 'is_checked')
 
 
