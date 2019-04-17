@@ -15,9 +15,10 @@ class SurveyForm(Form):
                                                                     choices=q_choices)
 
     @staticmethod
-    def save(self, POST):
-        for k, v in POST:
-            print(v)
+    def save(self):
+        d = super(SurveyForm, self.request.POST).__init__()
+        c = d.cleaned_data
+        print(c)
 
 # class SurveyAnswerForm(models.ModelForm):
 #
