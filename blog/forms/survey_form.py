@@ -14,11 +14,14 @@ class SurveyForm(Form):
                                                                     widget=CheckboxSelectMultiple,
                                                                     choices=q_choices)
 
-    @staticmethod
-    def save(self):
-        d = super(SurveyForm, self.request.POST).__init__()
-        c = d.cleaned_data
-        print(c)
+    # @staticmethod
+    def save(self, survey):
+
+        for field_name, field_value in self.cleaned_data.items():
+            if field_name.startswith("question_"):
+                q_id = int(field_name.split("_")[1])
+                print(q_id, field_value)
+
 
 # class SurveyAnswerForm(models.ModelForm):
 #
