@@ -15,8 +15,9 @@ class SurveyForm(Form):
                                                                     choices=q_choices)
 
     # @staticmethod
-    def save(self, survey):
-
+    def save(self, survey: int, user: int):
+        print("Survey id: ", survey)
+        print("User id:", user)
         for field_name, field_value in self.cleaned_data.items():
             if field_name.startswith("question_"):
                 q_id = int(field_name.split("_")[1])
