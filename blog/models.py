@@ -16,6 +16,10 @@ class Article(models.Model):
     def __str__(self):
         return "{} -- {}".format(self.title, self.author.last_name)
 
+    class Meta:
+        verbose_name = 'article'
+        verbose_name_plural = 'articles'
+
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET(0))
@@ -25,6 +29,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return "{} -- {}".format(self.article.title, self.date_add)
+
+    class Meta:
+        verbose_name = 'comment'
+        verbose_name_plural = 'comments'
 
 
 # class Category(models.Model):
@@ -42,6 +50,10 @@ class Survey(models.Model):
 
     def get_absolute_url(self):
         return reverse("survey-detail", kwargs={"id": self.pk})
+
+    class Meta:
+        verbose_name = 'survey'
+        verbose_name_plural = 'surveys'
 
 
 class Questions(models.Model):
@@ -62,6 +74,14 @@ class Questions(models.Model):
     def __str__(self):
         return self.question
 
+    class Meta:
+        verbose_name = 'question'
+        verbose_name_plural = 'questions'
+
+
+class Response(models.Model):
+    pass
+
 
 class Answers(models.Model):
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
@@ -69,8 +89,9 @@ class Answers(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='users')
     answer = models.CharField(max_length=20)
 
-    # def __str__(self):
-    #     return
+    class Meta:
+        verbose_name = 'answer'
+        verbose_name_plural = 'answers'
 
 
 
