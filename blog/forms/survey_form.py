@@ -16,12 +16,19 @@ class SurveyForm(Form):
 
     # @staticmethod
     def save(self, survey: int, user: int):
+
         print("Survey id: ", survey)
         print("User id:", user)
         for field_name, field_value in self.cleaned_data.items():
             if field_name.startswith("question_"):
                 q_id = int(field_name.split("_")[1])
+                q = Questions.objects.get(pk=q_id)
                 print(q_id, field_value)
+                a = Answers(question_id=q)
+                a.answer = field_value
+                a.survey = survey
+                a.user = User.objects.get(pk=user)
+                a.save()
 
 
 # class SurveyAnswerForm(models.ModelForm):
