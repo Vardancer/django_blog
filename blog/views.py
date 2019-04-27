@@ -71,7 +71,7 @@ class SurveyView(FormView):
         return initial
 
     def form_valid(self, form):
-        user: int = self.request.user
+        user: int = self.request.user.id
         form.save(survey=self.kwargs['survey'], user=user)
         return super().form_valid(form)
 

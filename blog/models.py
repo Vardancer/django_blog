@@ -69,8 +69,8 @@ class Answers(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='users')
     answer = models.CharField(max_length=20)
 
-    def __str__(self):
-        return self.question
+    # def __str__(self):
+    #     return
 
 
 
