@@ -80,7 +80,16 @@ class Questions(models.Model):
 
 
 class Response(models.Model):
-    pass
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'response'
+        verbose_name_plural = 'responses'
+        unique_together = ("survey", "user")
+
+    def __str__(self):
+        return self.survey
 
 
 class Answers(models.Model):
