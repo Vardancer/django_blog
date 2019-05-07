@@ -1,5 +1,6 @@
 from django.forms import Form, CheckboxSelectMultiple, MultipleChoiceField
-from blog.models import Survey, Questions, Answers, User
+from django.forms import ChoiceField, RadioSelect
+from blog.models import Survey, Questions, Answers, User, Response
 import uuid
 
 
@@ -16,10 +17,12 @@ class SurveyForm(Form):
                                                                     choices=q_choices)
 
     def save(self, survey: int, user: int):
-
+        # response = Response(survey=survey)
+        # response.user = User.objects.get(pk=user)
+        # response.save()
         print("Survey id: ", type(survey))
         print("User id:", type(user))
-        print(uuid.uuid4().hex)
+        print(uuid.uuid4())
         for field_name, field_value in self.cleaned_data.items():
             if field_name.startswith("question_"):
                 q_id = int(field_name.split("_")[1])

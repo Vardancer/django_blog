@@ -40,13 +40,14 @@ class Comment(models.Model):
 
 
 class Survey(models.Model):
+    title = models.CharField(max_length=50, default="test")
     description = models.CharField(max_length=150)
     # is_published = models.BooleanField(default=False)
     # need_logged_user = models.BooleanField(default=True)
     # category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='categories')
 
     def __str__(self):
-        return self.description
+        return self.title
 
     def get_absolute_url(self):
         return reverse("survey-detail", kwargs={"id": self.pk})
@@ -81,7 +82,7 @@ class Questions(models.Model):
 
 class Response(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = 'response'
@@ -89,7 +90,7 @@ class Response(models.Model):
         unique_together = ("survey", "user")
 
     def __str__(self):
-        return self.survey
+        return "Survey subj {} done by {}".format(self.survey.title, self.user.username)
 
 
 class Answers(models.Model):
