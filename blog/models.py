@@ -61,6 +61,7 @@ class Questions(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='survey')
     question = models.CharField(max_length=255)
     choices = models.CharField(default="yes,no,maybe", max_length=200)
+    required = models.BooleanField(default=False)
 
     def get_choices(self):
         choices = self.choices.split(',')
@@ -82,7 +83,7 @@ class Questions(models.Model):
 
 class Response(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'response'
@@ -96,8 +97,8 @@ class Response(models.Model):
 class Answers(models.Model):
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='users')
-    answer = models.CharField(max_length=20)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='users')
+    answer = models.CharField(max_length=20, blank=True)
 
     class Meta:
         verbose_name = 'answer'

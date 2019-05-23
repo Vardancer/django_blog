@@ -16,6 +16,12 @@ class SurveyForm(Form):
                                                                     widget=CheckboxSelectMultiple,
                                                                     choices=q_choices)
 
+            if q.required:
+                self.fields["question_%d" % q.pk].required = True
+                self.fields["question_%d" % q.pk].widget.attrs["class"] = "required"
+            else:
+                self.fields["question_%d" % q.pk].required = False
+
     def save(self, survey: int, user: int):
         # response = Response(survey=survey)
         # response.user = User.objects.get(pk=user)
