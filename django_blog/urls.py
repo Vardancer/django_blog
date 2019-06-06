@@ -26,6 +26,7 @@ urlpatterns = [
     path('accounts/logout/', LogoutView.as_view(), name='logout'),
     path('accounts/', include('registration.backends.default.urls')),
     path('admin/', admin.site.urls),
+    path('survey/', include('survey.urls'), name='survey'),
     path('', include('blog.urls'), name='blog'),
 ]
 

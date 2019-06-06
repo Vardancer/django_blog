@@ -1,12 +1,13 @@
 from django.contrib import admin
 from django.contrib.admin import ModelAdmin
-import blog.models as bm
+import survey.models as bm
+import blog.models as bl
 
 # Register your models here.
 
 
-admin.site.register(bm.Article)
-admin.site.register(bm.Comment)
+admin.site.register(bl.Article)
+admin.site.register(bl.Comment)
 admin.site.register(bm.Survey)
 admin.site.register(bm.Questions)
 admin.site.register(bm.Answers)

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'widget_tweaks',
     'ckeditor',
+    'survey',
     'blog',
 ]
 
@@ -63,8 +64,9 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            'templates',
             'blog/templates',
+            'survey/templates',
+            'templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
