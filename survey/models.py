@@ -47,8 +47,6 @@ class Response(models.Model):
 
 
 class Answers(models.Model):
-    question = models.ForeignKey(Questions, on_delete=models.CASCADE, related_name='questions')
-    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     answer = models.CharField(max_length=256)
 
     class Meta:

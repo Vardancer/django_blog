@@ -7,7 +7,7 @@ from django.http import Http404
 
 class SurveyView(FormView):
     form_class = SurveyForm
-    template_name = 'survey_form.html'
+    template_name = 'survey.html'
     success_url = reverse_lazy('article-list')
 
     def dispatch(self, request, *args, **kwargs):

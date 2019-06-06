@@ -5,11 +5,12 @@ import uuid
 
 
 class SurveyForm(Form):
-    def __init__(self, user, survey, data=None, initial=None):
+    def __init__(self, user, survey, data=None, initial=None, prefix=None):
 
-        self.user = user if user.is_authenticated() else None
+        self.user = user if user.is_authenticated else None
         self.survey = survey
         self.base_fields = {}
+        self.prefix = prefix
         self.is_bound = data is not None
 
         self.data = data or {}
