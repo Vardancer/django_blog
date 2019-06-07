@@ -8,7 +8,7 @@ import uuid
 
 class SurveyForm(Form):
     def __init__(self, user, survey, data=None, initial=None, prefix=None,
-                 auto_id='id_%s', empty_permitted=False, error_class=ErrorList, label_suffix=':'):
+                 auto_id='id_%s', empty_permitted=False, error_class=ErrorList, label_suffix=':', *args, **kwargs):
 
         self.user = user if user.is_authenticated else None
         self.survey = survey
