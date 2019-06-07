@@ -67,6 +67,20 @@ class SurveyForm(Form):
                 initial[question] = response.answer.all()[0].pk
         return initial
 
+    def clean(self):
+        for question in self.survey.questions.all():
+            if question.required:
+                response = self.cleaned_data.get(question)
+                if not response:
+                    self._errors = ['Some error']
+        return self.cleaned_data
+
+    def save(self):
+        pass
+
+
+
+
 
 # class SurveyAnswerForm(models.ModelForm):
 #
