@@ -1,11 +1,15 @@
-{% extends 'base.html' %}
+{#{% extends 'base.html' %}#}
 
-{% load static %}
-
+{#{% load static %}#}
+<html>
+<body>
 {% block content %}
-    <form method="post"> {% csrf_token %}
-        {{ form.as_table }}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
     <input type="submit" value="Submit"/>
 
     </form>
 {% endblock %}
+</body>
+</html>

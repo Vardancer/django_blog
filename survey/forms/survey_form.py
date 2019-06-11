@@ -1,6 +1,6 @@
 from collections import OrderedDict
 from django.forms.utils import ErrorList
-from django.forms import Form, CheckboxSelectMultiple, MultipleChoiceField, ModelMultipleChoiceField, ModelChoiceField
+from django.forms import Form, CheckboxSelectMultiple, MultipleChoiceField
 from django.forms import ChoiceField, RadioSelect
 from survey.models import Survey, Questions, Answers, User, Response
 import uuid
@@ -8,7 +8,7 @@ import uuid
 
 class SurveyForm(Form):
     def __init__(self, user, survey, data=None, initial=None, prefix=None,
-                 auto_id='id_%s', empty_permitted=False, error_class=ErrorList, label_suffix=':', *args, **kwargs):
+                 auto_id='id_%s', empty_permitted=False, error_class=ErrorList, label_suffix=':'):
 
         self.user = user if user.is_authenticated else None
         self.survey = survey
@@ -24,26 +24,26 @@ class SurveyForm(Form):
         self._errors = None
         self._changed_data = None
         self._bound_fields_cache = {}
-
+        # choices = []
         for question in self.survey.questions.all():
-            queryset = question.answers.all()
+            choices = [a.answer for a in question.answers.all()]
 
-            if queryset:
+            if choices:
                 field_kwargs = {
                     'label': question,
-                    'queryset': queryset,
+                    'choices': choices,
                     'required': False,
                 }
-
+                print(field_kwargs)
                 if question.is_multiselect:
                     field_kwargs.update({
                         'widget': CheckboxSelectMultiple,
                     })
                     self.fields.update({
-                        question.answers: ModelMultipleChoiceField(**field_kwargs)
+                        question.answers: MultipleChoiceField(**field_kwargs)
                     })
                 else:
-                    self.fields.update({question.answers: ModelChoiceField(**field_kwargs)})
+                    self.fields.update({question.answers: ChoiceField(**field_kwargs)})
 
     def get_initial(self):
         initial = {}
@@ -77,9 +77,6 @@ class SurveyForm(Form):
 
     def save(self):
         pass
-
-
-
 
 
 # class SurveyAnswerForm(models.ModelForm):

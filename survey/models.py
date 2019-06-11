@@ -49,6 +49,8 @@ class Response(models.Model):
 class Answers(models.Model):
     answer = models.CharField(max_length=256)
 
+    def __str__(self):
+        return self.answer
     class Meta:
         verbose_name = 'answer'
         verbose_name_plural = 'answers'
