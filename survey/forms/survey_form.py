@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from django.forms.utils import ErrorList
 from django.forms import Form, CheckboxSelectMultiple, MultipleChoiceField
+from django.forms import ModelMultipleChoiceField, ModelChoiceField
 from django.forms import ChoiceField, RadioSelect
 from survey.models import Survey, Questions, Answers, User, Response
 import uuid
@@ -8,8 +9,8 @@ import uuid
 
 class SurveyForm(Form):
     def __init__(self, user, survey, data=None, initial=None, prefix=None,
-                 auto_id='id_%s', empty_permitted=False, error_class=ErrorList, label_suffix=':'):
-
+                 empty_permitted=False, error_class=ErrorList, label_suffix=':', *args, **kwargs):
+        super(SurveyForm, self).__init__(*args, **kwargs)
         self.user = user if user.is_authenticated else None
         self.survey = survey
         self.base_fields = {}
@@ -18,7 +19,7 @@ class SurveyForm(Form):
         self.is_bound = data is not None
         self.error_class = error_class
         self.data = data or {}
-        self.auto_id = auto_id
+        # self.auto_id = auto_id
         self.fields = OrderedDict()
         self.initial = initial or self.get_initial()
         self._errors = None
@@ -26,13 +27,14 @@ class SurveyForm(Form):
         self._bound_fields_cache = {}
         # choices = []
         for question in self.survey.questions.all():
-            choices = [a.answer for a in question.answers.all()]
-
-            if choices:
+            queryset = question.answers.all()
+            req = question.required
+            if queryset:
                 field_kwargs = {
                     'label': question,
-                    'choices': choices,
+                    'queryset': queryset,
                     'required': False,
+                    # 'widget': RadioSelect,
                 }
                 print(field_kwargs)
                 if question.is_multiselect:
@@ -40,10 +42,16 @@ class SurveyForm(Form):
                         'widget': CheckboxSelectMultiple,
                     })
                     self.fields.update({
-                        question.answers: MultipleChoiceField(**field_kwargs)
+                        question.answers: ModelMultipleChoiceField(**field_kwargs)
                     })
                 else:
-                    self.fields.update({question.answers: ChoiceField(**field_kwargs)})
+                    field_kwargs.update({
+                        'widget': RadioSelect(attrs={'class': 'special'}),
+                        'empty_label': None,
+                    })
+                    self.fields.update({
+                        question.answers: ModelChoiceField(**field_kwargs),
+                    })
 
     def get_initial(self):
         initial = {}
