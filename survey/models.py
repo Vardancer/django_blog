@@ -45,6 +45,7 @@ class Questions(models.Model):
 
 class Response(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
+    is_complete = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
     question = models.ForeignKey(Questions, verbose_name='Question', related_name='responses', on_delete=models.CASCADE)
     answer = models.ManyToManyField('Answers', verbose_name='Answer', related_name='responses')
@@ -61,5 +62,4 @@ class Answers(models.Model):
     class Meta:
         verbose_name = 'answer'
         verbose_name_plural = 'answers'
-
 

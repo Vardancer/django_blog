@@ -1,4 +1,6 @@
 from collections import OrderedDict
+
+from django.core.exceptions import ValidationError
 from django.forms.utils import ErrorList
 from django.forms import Form, CheckboxSelectMultiple, MultipleChoiceField
 from django.forms import ModelMultipleChoiceField, ModelChoiceField
@@ -20,7 +22,7 @@ class SurveyForm(Form):
                 field_kwargs = {
                     'label': question,
                     'queryset': queryset,
-                    'required': False,
+                    'required': req,
                     # 'widget': RadioSelect,
                 }
                 # print(field_kwargs, req)
@@ -69,35 +71,31 @@ class SurveyForm(Form):
                 initial[question.slug] = response.answer.all()[0].pk
         return initial
 
-    # def clean(self):
-    #     for question in self.survey.questions.all():
-    #         if question.required:
-    #             response = self.cleaned_data.get(question)
-    #             if not response:
-    #                 self._errors = ['Some error']
-    #     return self.cleaned_data
-
     def save(self):
         # pass
-        for question in self.survey.questions.all():
-            response = self.cleaned_data.get(question.slug)
-            print(response)
-            # if self.user:
-            #     resp_obj, crtd = Response.objects.get_or_create(
-            #         user=self.user, question=question, survey=self.survey
-            #     )
-            # print(resp_obj, crtd)
-            # resp_obj.answer.clear()
+        if Response.is_complete:
+            return self.survey
+        else:
+            for question in self.survey.questions.all():
+                response = self.cleaned_data.get(question.slug)
 
-            # if response:
-            #     if isinstance(response, Answers):
-            #         resp_obj.answer.add(response)
-            #     else:
-            #         for answer in response:
-            #             resp_obj.answer.add(answer)
+                if self.user:
+                    resp_obj, crtd = Response.objects.get_or_create(
+                        user=self.user, question=question, survey=self.survey, is_complete=True
+                    )
+                # todo logger
+                resp_obj.answer.clear()
 
-            # resp_obj.save()
-        return self.survey
+                if response:
+                    if isinstance(response, Answers):
+                        resp_obj.answer.add(response)
+                    else:
+                        # print(len(response))
+                        for answer in response:
+                            resp_obj.answer.add(answer)
+
+                resp_obj.save()
+            return self.survey
 
 
 # class SurveyAnswerForm(models.ModelForm):
