@@ -23,13 +23,20 @@ class SurveyForm(Form):
                     'required': False,
                     # 'widget': RadioSelect,
                 }
-                print(field_kwargs, req)
+                # print(field_kwargs, req)
+                if self.initial.get(question.slug):
+                    field_kwargs.update(
+                        {
+                            'initial': self.initial.get(question.slug)
+                        }
+                    )
+
                 if question.is_multiselect:
                     field_kwargs.update({
                         'widget': CheckboxSelectMultiple,
                     })
                     self.fields.update({
-                        question.answers: ModelMultipleChoiceField(**field_kwargs)
+                        question.slug: ModelMultipleChoiceField(**field_kwargs)
                     })
                 else:
                     field_kwargs.update({
@@ -37,7 +44,7 @@ class SurveyForm(Form):
                         'empty_label': None,
                     })
                     self.fields.update({
-                        question.answers: ModelChoiceField(**field_kwargs),
+                        question.slug: ModelChoiceField(**field_kwargs),
                     })
 
     def get_initial(self):
@@ -57,24 +64,24 @@ class SurveyForm(Form):
                     continue
 
             if question.is_multiselect:
-                initial[question] = [resp.pk for resp in response.answer.all()]
+                initial[question.slug] = [resp.pk for resp in response.answer.all()]
             elif response.answer.all():
-                initial[question] = response.answer.all()[0].pk
+                initial[question.slug] = response.answer.all()[0].pk
         return initial
 
-    def clean(self):
-        for question in self.survey.questions.all():
-            if question.required:
-                response = self.cleaned_data.get(question)
-                if not response:
-                    self._errors = ['Some error']
-        return self.cleaned_data
+    # def clean(self):
+    #     for question in self.survey.questions.all():
+    #         if question.required:
+    #             response = self.cleaned_data.get(question)
+    #             if not response:
+    #                 self._errors = ['Some error']
+    #     return self.cleaned_data
 
     def save(self):
         # pass
         for question in self.survey.questions.all():
-            # response = self.cleaned_data
-            print(self.cleaned_data)
+            response = self.cleaned_data.get(question.slug)
+            print(response)
             # if self.user:
             #     resp_obj, crtd = Response.objects.get_or_create(
             #         user=self.user, question=question, survey=self.survey

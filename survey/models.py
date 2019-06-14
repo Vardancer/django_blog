@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils.text import slugify
 
 
 class Survey(models.Model):
@@ -24,12 +25,18 @@ class Survey(models.Model):
 class Questions(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='questions')
     question = models.CharField(max_length=256, blank=True)
+    slug = models.SlugField()
     required = models.BooleanField(default=False)
     answers = models.ManyToManyField('Answers', related_name='answers')
     is_multiselect = models.BooleanField(default=False)
 
     def __str__(self):
         return self.question
+
+    # def save(self, force_insert=False, force_update=False, using=None,
+    #          update_fields=None):
+    #     if not self.id:
+    #         self.slug = slugify(self.question)
 
     class Meta:
         verbose_name = 'question'
