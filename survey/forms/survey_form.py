@@ -8,23 +8,10 @@ import uuid
 
 
 class SurveyForm(Form):
-    def __init__(self, user, survey, data=None, initial=None, prefix=None,
-                 empty_permitted=False, error_class=ErrorList, label_suffix=':', *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        self.survey = kwargs.pop('survey', None)
         super(SurveyForm, self).__init__(*args, **kwargs)
-        self.user = user if user.is_authenticated else None
-        self.survey = survey
-        self.base_fields = {}
-        self.label_suffix = label_suffix
-        self.prefix = prefix
-        self.is_bound = data is not None
-        self.error_class = error_class
-        self.data = data or {}
-        # self.auto_id = auto_id
-        self.fields = OrderedDict()
-        self.initial = initial or self.get_initial()
-        self._errors = None
-        self._changed_data = None
-        self._bound_fields_cache = {}
         # choices = []
         for question in self.survey.questions.all():
             queryset = question.answers.all()
@@ -36,7 +23,7 @@ class SurveyForm(Form):
                     'required': False,
                     # 'widget': RadioSelect,
                 }
-                print(field_kwargs)
+                print(field_kwargs, req)
                 if question.is_multiselect:
                     field_kwargs.update({
                         'widget': CheckboxSelectMultiple,
@@ -84,7 +71,26 @@ class SurveyForm(Form):
         return self.cleaned_data
 
     def save(self):
-        pass
+        # pass
+        for question in self.survey.questions.all():
+            # response = self.cleaned_data
+            print(self.cleaned_data)
+            # if self.user:
+            #     resp_obj, crtd = Response.objects.get_or_create(
+            #         user=self.user, question=question, survey=self.survey
+            #     )
+            # print(resp_obj, crtd)
+            # resp_obj.answer.clear()
+
+            # if response:
+            #     if isinstance(response, Answers):
+            #         resp_obj.answer.add(response)
+            #     else:
+            #         for answer in response:
+            #             resp_obj.answer.add(answer)
+
+            # resp_obj.save()
+        return self.survey
 
 
 # class SurveyAnswerForm(models.ModelForm):
