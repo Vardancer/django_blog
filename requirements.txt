@@ -1,6 +1,6 @@
 Django==2.2.1
 django-ckeditor==5.6.1
-django-debug-toolbar==1.11
+django-debug-toolbar==1.11.1
 django-js-asset==1.2.2
 django-registration-redux==2.5
 pytz==2018.9
