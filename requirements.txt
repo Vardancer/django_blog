@@ -5,4 +5,4 @@ django-js-asset==1.2.2
 django-registration-redux==2.5
 pytz==2018.9
 sqlparse==0.3.0
-urllib3==1.24.1
+urllib3==1.26.5
